@@ -7,7 +7,7 @@ part of 'meal_food_details_viewmodel.dart';
 // **************************************************************************
 
 String _$mealFoodDetailViewModelHash() =>
-    r'ae368a22a8baa14979278092dd0978473a0d4254';
+    r'f12f9030b90c17d912b7cd7f4ff005c9d930d16b';
 
 /// Copied from Dart SDK
 class _SystemHash {

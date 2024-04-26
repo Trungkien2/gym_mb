@@ -10,8 +10,12 @@ import 'package:riverpod_tour/presentations/meal_planner/view_model/meal_food_de
 class FoodInfoDetailsView extends ConsumerStatefulWidget {
   final Map? mObj;
   final Meal? dObj;
+  final String? mealPlannerId;
   const FoodInfoDetailsView(
-      {super.key, required this.dObj, required this.mObj});
+      {super.key,
+      required this.dObj,
+      required this.mObj,
+      required this.mealPlannerId});
 
   @override
   ConsumerState<FoodInfoDetailsView> createState() =>
@@ -438,9 +442,11 @@ class _FoodInfoDetailsViewState extends ConsumerState<FoodInfoDetailsView> {
                         child: RoundButton(
                             title: "Add to  Meal",
                             onPressed: () {
-                              read.onCreateMeal(widget.mObj?["name"],
-                                  widget.dObj!.id.toString());
-
+                              read.onCreateMealPlannerMeal(
+                                widget.dObj!.id.toString(),
+                                widget.mealPlannerId.toString(),
+                              );
+                              read.onClear();
                               Navigator.pop(context);
                             }),
                       ),

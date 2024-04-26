@@ -10,23 +10,24 @@ import '../../common/colo_extension.dart';
 
 import 'food_info_details_view.dart';
 
-class MealFoodDetailsView extends ConsumerStatefulWidget {
+class MealFoodDetailsLunchView extends ConsumerStatefulWidget {
   final Map eObj;
-  final String? MealPlannerID;
-  const MealFoodDetailsView(
-      {super.key, required this.eObj, this.MealPlannerID});
+  final String? MealPlannerId;
+  const MealFoodDetailsLunchView(
+      {super.key, required this.eObj, this.MealPlannerId});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _MealFoodDetailsViewState();
+      _MealFoodDetailsLunchViewState();
 }
 
-class _MealFoodDetailsViewState extends ConsumerState<MealFoodDetailsView> {
+class _MealFoodDetailsLunchViewState
+    extends ConsumerState<MealFoodDetailsLunchView> {
   TextEditingController txtSearch = TextEditingController();
 
   List categoryArr = [
     {
-      "name": "Salad",
+      "name": "Salad123",
       "image": "asset/img/c_1.png",
     },
     {
@@ -279,9 +280,9 @@ class _MealFoodDetailsViewState extends ConsumerState<MealFoodDetailsView> {
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: data?.mealsBreakFast!.rows?.length,
+                    itemCount: data?.mealsBreakLunch!.rows?.length,
                     itemBuilder: (context, index) {
-                      Meal? fObj = data?.mealsBreakFast!.rows![index];
+                      Meal? fObj = data?.mealsBreakLunch!.rows![index];
                       return InkWell(
                         onTap: () {
                           Navigator.push(
@@ -290,7 +291,7 @@ class _MealFoodDetailsViewState extends ConsumerState<MealFoodDetailsView> {
                               builder: (context) => FoodInfoDetailsView(
                                 dObj: fObj,
                                 mObj: widget.eObj,
-                                mealPlannerId: widget.MealPlannerID,
+                                mealPlannerId: widget.MealPlannerId,
                               ),
                             ),
                           );

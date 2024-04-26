@@ -1,5 +1,6 @@
 import 'package:riverpod_tour/models/exercise.dart';
 import 'package:riverpod_tour/models/meal.dart';
+import 'package:riverpod_tour/models/meal_planner.dart';
 import 'package:riverpod_tour/models/user.dart';
 import 'package:riverpod_tour/models/workout.dart';
 import 'package:riverpod_tour/repositories/iapp_repository.dart';
@@ -7,6 +8,7 @@ import 'package:riverpod_tour/services/network_service.dart';
 
 class AppRepository implements IAppRepository {
   final RestClient _client;
+
   AppRepository({required RestClient client}) : _client = client;
 
   @override
@@ -20,10 +22,44 @@ class AppRepository implements IAppRepository {
   }
 
   @override
+  Future<MealPlanner> createMealPlanner(String name, String user_id) async {
+    try {
+      final response =
+          await _client.createMealPlanner({'name': name, 'user_id': user_id});
+      return response;
+    } catch (exception) {
+      throw Exception(exception);
+    }
+  }
+
+  @override
+  Future<dynamic> createMealPlannerMeal(
+      String MealId, String MealPlannerId) async {
+    try {
+      final response = await _client.createMealPlannerMeal(
+          {'meal_id': MealId, 'meal_planner_id': MealPlannerId});
+      return response;
+    } catch (exception) {
+      throw Exception(exception);
+    }
+  }
+
+  @override
   Future<User> register(String name, String email, String password) async {
     try {
       final response = await _client
           .register({'name': name, 'email': email, 'password': password});
+      return response;
+    } catch (exception) {
+      throw Exception(exception);
+    }
+  }
+
+  @override
+  Future<User> login(String email, String password) async {
+    try {
+      final response =
+          await _client.login({'email': email, 'password': password});
       return response;
     } catch (exception) {
       throw Exception(exception);
@@ -80,10 +116,48 @@ class AppRepository implements IAppRepository {
   }
 
   @override
+  Future<bool> deleteMealPlannerMeal(String id) async {
+    try {
+      final response = await _client.deleteMealPlannerMeal(id);
+      return response["id"] != null;
+    } catch (exception) {
+      throw Exception(exception);
+    }
+  }
+
+  @override
   Future<Meals> getMeal() async {
     try {
       final queries = {"fields": '["\$all"]'};
       final response = await _client.getMeal(queries);
+      return response;
+    } catch (exception) {
+      throw Exception(exception);
+    }
+  }
+
+  @override
+  Future<MealPlanners> getMealPlannerbyAdmin() async {
+    try {
+      final queries = {
+        "fields": '["\$all"]',
+        "where": '{"is_admin_create" : true}'
+      };
+      final response = await _client.getMealPlanner(queries);
+      return response;
+    } catch (exception) {
+      throw Exception(exception);
+    }
+  }
+
+  @override
+  Future<MealPlanners> getMealPlannerbyuser() async {
+    try {
+      final queries = {
+        "fields": '["\$all"]',
+        "where": '{"user_id":"a97724c0-0194-11ef-8715-d9b96b675793"}'
+      };
+      final response = await _client.getMealPlanner(queries);
       return response;
     } catch (exception) {
       throw Exception(exception);
@@ -119,9 +193,25 @@ class AppRepository implements IAppRepository {
   }
 
   @override
-  Future<dynamic> addMeal(String type_meal, String id) async {
+  Future<dynamic> getMealPlannerMeal(
+      String? mealPlannerId, String typeMeal) async {
     try {
-      final response = await _client.addMeal({'type_meal': type_meal}, id);
+      final queries = {
+        "fields": '["\$all",{"meal":["\$all"]}]',
+        "where":
+            '{"meal_planner_id": "$mealPlannerId","\$meal.type_meal\$":"$typeMeal"}'
+      };
+      final response = await _client.getMealPlannerMeal(queries);
+      return response;
+    } catch (exception) {
+      throw Exception(exception);
+    }
+  }
+
+  @override
+  Future<dynamic> addMeal(String typeMeal, String id) async {
+    try {
+      final response = await _client.addMeal({'type_meal': typeMeal}, id);
       return response;
     } catch (exception) {
       throw Exception(exception);

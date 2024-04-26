@@ -10,9 +10,10 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       name: json['name'] as String?,
       email: json['email'] as String?,
       password: json['password'] as String?,
-    );
+    )..id = json['id'] as String?;
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'email': instance.email,
       'password': instance.password,

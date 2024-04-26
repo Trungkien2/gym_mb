@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_tour/common/common_widget/meal_food_schedule_demo_row.dart';
 import 'package:riverpod_tour/common/common_widget/meal_food_schedule_row.dart';
 import 'package:riverpod_tour/common/common_widget/nutritions_row.dart';
 import 'package:riverpod_tour/injection.dart';
@@ -13,15 +14,16 @@ import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart
 
 import '../../common/colo_extension.dart';
 
-class MealScheduleView extends ConsumerStatefulWidget {
+class MealScheduleDemoView extends ConsumerStatefulWidget {
   final String? id;
-  const MealScheduleView({super.key, this.id});
+  const MealScheduleDemoView({super.key, this.id});
 
   @override
-  ConsumerState<MealScheduleView> createState() => _MealScheduleViewState();
+  ConsumerState<MealScheduleDemoView> createState() =>
+      _MealScheduleDemoViewState();
 }
 
-class _MealScheduleViewState extends ConsumerState<MealScheduleView> {
+class _MealScheduleDemoViewState extends ConsumerState<MealScheduleDemoView> {
   final IAppRepository _appRepository = getIt<IAppRepository>();
   bool isDataLoaded = false;
   Future<dynamic> fetchExcercise() async {
@@ -209,27 +211,6 @@ class _MealScheduleViewState extends ConsumerState<MealScheduleView> {
                             fontWeight: FontWeight.w700),
                       ),
                       TextButton(
-                        onPressed: () {
-                          var fObj = {
-                            "name": "Breakfast",
-                            "image": "asset/img/m_3.png",
-                            "number": "120+ Foods"
-                          } as Map;
-                          // Thực hiện hành động khi nút được nhấn để tải dữ liệu
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MealFoodDetailsView(
-                                  eObj: fObj, MealPlannerID: widget?.id),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          "+ Add item",
-                          style: TextStyle(color: TColor.gray, fontSize: 12),
-                        ),
-                      ),
-                      TextButton(
                         onPressed: () {},
                         child: Text(
                           "${breakfastArr.length} Items | 230 calories",
@@ -249,10 +230,9 @@ class _MealScheduleViewState extends ConsumerState<MealScheduleView> {
                       final mealMap = MealList![index];
                       final meal = mealMap['meal'];
                       if (meal != null) {
-                        return MealFoodScheduleRow(
+                        return MealFoodScheduleDemoRow(
                           mObj: meal,
                           index: index,
-                          mealPlannerId: mealMap['id'],
                         );
                       } else {
                         return const SizedBox();
@@ -270,25 +250,6 @@ class _MealScheduleViewState extends ConsumerState<MealScheduleView> {
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(width: 10), // Khoảng cách giữa văn bản và nút
-                        ElevatedButton(
-                          onPressed: () {
-                            // Thực hiện hành động khi nút được nhấn để tải dữ liệu
-                            var fObj = {
-                              "name": "Breakfast",
-                              "image": "asset/img/m_3.png",
-                              "number": "120+ Foods"
-                            } as Map;
-                            // Thực hiện hành động khi nút được nhấn để tải dữ liệu
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MealFoodDetailsView(
-                                    eObj: fObj, MealPlannerID: widget?.id),
-                              ),
-                            );
-                          },
-                          child: Text('Add meal'),
-                        ),
                       ],
                     ),
                   ),
@@ -305,44 +266,7 @@ class _MealScheduleViewState extends ConsumerState<MealScheduleView> {
                             fontWeight: FontWeight.w700),
                       ),
                       TextButton(
-                        onPressed: () {
-                          var fObj = {
-                            "name": "Breakfast",
-                            "image": "asset/img/m_3.png",
-                            "number": "120+ Foods"
-                          } as Map;
-                          // Thực hiện hành động khi nút được nhấn để tải dữ liệu
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MealFoodDetailsView(
-                                eObj: fObj,
-                                MealPlannerID: widget?.id,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          "+ Add item",
-                          style: TextStyle(color: TColor.gray, fontSize: 12),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          var fObj = {
-                            "name": "Lunch",
-                            "image": "asset/img/m_3.png",
-                            "number": "120+ Foods"
-                          } as Map;
-                          // Thực hiện hành động khi nút được nhấn để tải dữ liệu
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MealFoodDetailsLunchView(
-                                  eObj: fObj, MealPlannerId: widget?.id),
-                            ),
-                          );
-                        },
+                        onPressed: () {},
                         child: Text(
                           "${lunchArr.length} Items | 500 calories",
                           style: TextStyle(color: TColor.gray, fontSize: 12),
@@ -363,10 +287,9 @@ class _MealScheduleViewState extends ConsumerState<MealScheduleView> {
                       final mealMap = MealListLunch![index];
                       final meal = mealMap['meal'];
                       if (meal != null) {
-                        return MealFoodScheduleRow(
+                        return MealFoodScheduleDemoRow(
                           mObj: meal,
                           index: index,
-                          mealPlannerId: mealMap['id'],
                         );
                       } else {
                         return const SizedBox();
@@ -384,24 +307,6 @@ class _MealScheduleViewState extends ConsumerState<MealScheduleView> {
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(width: 10), // Khoảng cách giữa văn bản và nút
-                        ElevatedButton(
-                          onPressed: () {
-                            var fObj = {
-                              "name": "Lunch",
-                              "image": "asset/img/m_3.png",
-                              "number": "120+ Foods"
-                            } as Map;
-                            // Thực hiện hành động khi nút được nhấn để tải dữ liệu
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MealFoodDetailsLunchView(
-                                    eObj: fObj, MealPlannerId: widget?.id),
-                              ),
-                            );
-                          },
-                          child: Text('Add meal'),
-                        ),
                       ],
                     ),
                   ),

@@ -8,17 +8,24 @@ import 'package:riverpod_tour/presentations/login/login_viewmodel.dart';
 import 'package:riverpod_tour/router/app_router.gr.dart';
 
 @RoutePage()
-class LoginPage extends ConsumerWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginPageViewState();
+}
+
+class _LoginPageViewState extends ConsumerState<LoginPage> {
+  TextEditingController mailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
 
     final read = ref.read(loginViewModelProvider.notifier);
     ref.listen(loginViewModelProvider, (previous, next) {
       if (next.isSignIn == true) {
-        context.replaceRoute(const HomeRoute());
+        context.replaceRoute(const CompleteProfileView());
       }
     });
     return Scaffold(
@@ -48,15 +55,17 @@ class LoginPage extends ConsumerWidget {
                 SizedBox(
                   height: media.width * 0.04,
                 ),
-                const RoundTextField(
+                RoundTextField(
                   hitText: "Email",
                   icon: "asset/img/email.png",
                   keyboardType: TextInputType.emailAddress,
+                  controller: mailController,
                 ),
                 SizedBox(
                   height: media.width * 0.04,
                 ),
                 RoundTextField(
+                  controller: passController,
                   hitText: "Password",
                   icon: "asset/img/lock.png",
                   obscureText: true,
@@ -90,6 +99,7 @@ class LoginPage extends ConsumerWidget {
                 RoundButton(
                     title: "Login",
                     onPressed: () {
+                      read.onLogin(mailController.text, passController.text);
                       context.replaceRoute(const CompleteProfileView());
                     }),
                 SizedBox(

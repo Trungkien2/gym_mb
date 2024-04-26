@@ -6,6 +6,7 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
+  String? id;
   String? name;
   String? email;
   String? password;
@@ -17,6 +18,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   User copyWith({
+    String? id,
     String? name,
     String? email,
     String? password,

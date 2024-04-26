@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_tour/common/common_widget/find_eat_cell.dart';
 import 'package:riverpod_tour/common/common_widget/round_button.dart';
 import 'package:riverpod_tour/common/common_widget/today_meal_row.dart';
+import 'package:riverpod_tour/presentations/meal_planner/meal_demo_view.dart';
+import 'package:riverpod_tour/presentations/meal_planner/meal_food_details__lunch_view.dart';
+import 'package:riverpod_tour/presentations/meal_planner/meal_my_view.dart';
 
 import '../../common/colo_extension.dart';
 
@@ -290,8 +293,55 @@ class _MealPlannerViewState extends State<MealPlannerView> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MealScheduleView(),
+                                  builder: (context) => const MealMyView(),
+                                ),
+                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) =>
+                              //         const MealScheduleView(),
+                              //   ),
+                              // );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: media.width * 0.05,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 15),
+                    decoration: BoxDecoration(
+                      color: TColor.primaryColor2.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Daily Meal Demo",
+                          style: TextStyle(
+                              color: TColor.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(
+                          width: 70,
+                          height: 25,
+                          child: RoundButton(
+                            title: "Check",
+                            type: RoundButtonType.bgGradient,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MealDemoView(),
                                 ),
                               );
                             },
@@ -388,11 +438,19 @@ class _MealPlannerViewState extends State<MealPlannerView> {
                     var fObj = findEatArr[index] as Map? ?? {};
                     return InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    MealFoodDetailsView(eObj: fObj)));
+                        if (fObj['name'] == "Lunch") {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MealFoodDetailsLunchView(eObj: fObj)));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MealFoodDetailsView(eObj: fObj)));
+                        }
                       },
                       child: FindEatCell(
                         fObj: fObj,
